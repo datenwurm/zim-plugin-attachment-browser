@@ -386,11 +386,11 @@ class FileBrowserIconView(Gtk.IconView):
 		iter = store.get_iter(pathinfo)
 		file = self.folder.file(store[iter][BASENAME_COL])
 
-		item = Gtk.MenuItem.new_with_mnemonic(_('_Delete')) # T: menu item to delete file
+		item = Gtk.MenuItem.new_with_mnemonic(_('_Delete...')) # T: menu item to delete file
 		item.connect('activate', lambda o: delete_file(self, file))
 		menu.prepend(item)
 
-		item = Gtk.MenuItem.new_with_mnemonic(_('_Rename')) # T: menu item to rename file
+		item = Gtk.MenuItem.new_with_mnemonic(_('_Rename...')) # T: menu item to rename file
 		item.connect('activate', lambda o: rename_file(self, file))
 		menu.prepend(item)
 
