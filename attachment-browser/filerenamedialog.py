@@ -36,7 +36,6 @@ class FileRenameDialog(Dialog):
         # Add field for showing hints when an error occurs (e.g. filename already exists).
         self.txt_error = Gtk.Label()
         self.txt_error.set_visible(False)
-        self.txt_error.connect("hide", self.on_hide_error_entry)
 
         # Add ok button.
         self.btn_ok = self.get_widget_for_response(response_id=Gtk.ResponseType.OK)
@@ -47,18 +46,11 @@ class FileRenameDialog(Dialog):
         # Configure dialog.
         self.set_modal(True)
         self.set_default_size(380, 100)
-        self.vbox.pack_start(self.txt_filename, True, True, 0)
-        self.vbox.pack_start(self.txt_error, True, True, 0)
+        self.vbox.pack_start(self.txt_filename, False, True, 0)
+        self.vbox.pack_start(self.txt_error, False, True, 0)
 
         # Set focus to search field
         self.txt_filename.grab_focus()
-
-    def on_hide_error_entry(self, widget, user_data=None):
-        """ Resize the dialog when the error entry is going to be hidden. """
-        dialog_width = self.get_allocation().width
-        dialog_heigth = self.get_allocation().height
-        error_entry_height = self.txt_error.get_allocation().height
-        self.resize(dialog_width, dialog_heigth - error_entry_height)
 
     def do_validate(self, entry, data):
         """ Validating new file name, show error when validation fails and enable/disable ok button. """
