@@ -9,6 +9,7 @@
 
 import datetime
 import os
+import ntpath
 
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -41,6 +42,12 @@ MIN_THUMB_SIZE = 64 # don't render thumbs when icon size is smaller than this
 MAX_ICON_SIZE = 128 # never render icons larger than this - thumbs go up
 
 
+def path_leaf(path):
+	""" Returns the real name of the file without the path. """
+	head, tail = ntpath.split(path)
+	return tail or ntpath.basename(head)
+
+
 def delete_file(widget, file):
 	'''Delete a file
 
@@ -56,7 +63,7 @@ def delete_file(widget, file):
 	if not file.exists():
 		raise FileNotFoundError(file)
 
-	dialog = QuestionDialog(widget, _('Are you sure you want to delete this file?'))
+	dialog = QuestionDialog(widget, _('Are you sure you want to delete the file \'%s\'?') % path_leaf(file.path))
 	if dialog.run():
 		file.remove()
 
